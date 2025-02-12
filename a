@@ -1,0 +1,49 @@
+Purpose of report:
+	making a test on the funiction
+report description:
+	handle the prosess of and verefy it works
+test scope and conduct:
+	test on funiction and it's performance
+
+
+
+assesment scale:
+  
+ req id | req descreption | source | type | priority | status |test case id| descreption 	  |status     | comment
+
+REQ-#001|		  | customer|funictional|High|Approved|TST-#001| enter 2 integers as input|Passed     |N/A 
+							      |	       |
+							      |TST-#002| enter string and string  | Not passed|must handle non integer inputs
+							      |	       |
+							      |TST-#003| enter string and int     | Not passed|must handle the error
+
+
+test senario
+	test case No TST #001:
+		description: check if the result is true
+		inputs:
+		expected:
+		result:
+		
+	test case No TST #001:
+		description: check if the result is true
+		inputs:
+		expected:
+		result:	
+	
+test case No TST #001:
+		description: check if the result is true
+		inputs:
+		expected:
+		result:
+		
+		
+issue and solving:
+
+	issue 1:
+		solve:
+	issue 1:
+		solve:
+
+Recommendation:
+	handle unexpected inputs from user
