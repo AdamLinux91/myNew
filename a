@@ -1,49 +1,183 @@
-Purpose of report:
-	making a test on the funiction
-report description:
-	handle the prosess of and verefy it works
-test scope and conduct:
-	test on funiction and it's performance
+#include <NewPing.h>
+#include <Servo.h> 
+
+#define TRIG_PIN A1
+#define ECHO_PIN A0
+#define MAX_DISTANCE 200 
+NewPing sonar(TRIG_PIN, ECHO_PIN, MAX_DISTANCE);
+Servo car;
+int distance = 100;
 
 
+const int motorPin1  = 5;  
+const int motorPin2  = 6;  
+// Motor B
+const int motorPin3  = 10; 
+const int motorPin4  = 11;  
 
-assesment scale:
+void setup() {
+  Serial.begin(9600);
+  car.attach(9);  
+  car.write(115); 
+  delay(2000);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+  distance = readPing();
+  delay(100);
+
+}
+
+void loop() {
+ 
+  int distanceR = 0;
+  int distanceL = 0;
+  delay(40);
+ 
+  if (distance <= 20) {
+    moveStop();
+    delay(100);
+    moveBackward();
+    delay(600);
+    moveStop();
+    delay(200);
+    distanceR = lookRight();
+    delay(200);
+    distanceL = lookLeft();
+    delay(200);
+
+    if (distanceR >= distanceL) {
+      turnRight();
+      moveStop();
+    } else {
+      turnLeft();
+      moveStop();
+    }
+  } else {
+    moveForward();
   
- req id | req descreption | source | type | priority | status |test case id| descreption 	  |status     | comment
+  }
 
-REQ-#001|		  | customer|funictional|High|Approved|TST-#001| enter 2 integers as input|Passed     |N/A 
-							      |	       |
-							      |TST-#002| enter string and string  | Not passed|must handle non integer inputs
-							      |	       |
-							      |TST-#003| enter string and int     | Not passed|must handle the error
+  distance = readPing();
+
+  delay(100);
+}
+
+int lookRight() {
+  car.write(50); 
+  delay(500);
+  int distance = readPing();
+  delay(100);
+  car.write(115); 
+  return distance;
+}
+
+int lookLeft() {
+  car.write(170); 
+  delay(500);
+  int distance = readPing();
+  delay(100);
+  car.write(115); 
+  return distance;
+  delay(100);
+}
+
+int readPing() { 
+  delay(70);
+  int cm = sonar.ping_cm();
+  if (cm == 0) {
+    cm = 250;
+  }
+  return cm;
+}
+
+void moveStop() {
+  analogWrite(motorPin1, 0);
+  analogWrite(motorPin2, 0);
+  analogWrite(motorPin3, 0);
+  analogWrite(motorPin4, 0);
+} 
+  
+void moveForward() {
+  analogWrite(motorPin1, 180);
+  analogWrite(motorPin2, 0);
+  analogWrite(motorPin3, 180);
+  analogWrite(motorPin4, 0);  
+}
+
+void moveBackward() {
+  analogWrite(motorPin1, 0);
+  analogWrite(motorPin2, 180);
+  analogWrite(motorPin3, 0);
+  analogWrite(motorPin4, 180);   
+}  
+
+void turnRight() {
+  analogWrite(motorPin1, 180);
+  analogWrite(motorPin2, 0);
+  analogWrite(motorPin3, 0);
+  analogWrite(motorPin4, 180);    
+  delay(300);
+  moveForward();      
+} 
+ 
+void turnLeft() {
+  analogWrite(motorPin1, 0);
+  analogWrite(motorPin2, 180);   
+  analogWrite(motorPin3, 180);
+  analogWrite(motorPin4, 0);     
+  delay(300);
+  moveForward();}
 
 
-test senario
-	test case No TST #001:
-		description: check if the result is true
-		inputs:
-		expected:
-		result:
-		
-	test case No TST #001:
-		description: check if the result is true
-		inputs:
-		expected:
-		result:	
-	
-test case No TST #001:
-		description: check if the result is true
-		inputs:
-		expected:
-		result:
-		
-		
-issue and solving:
 
-	issue 1:
-		solve:
-	issue 1:
-		solve:
 
-Recommendation:
-	handle unexpected inputs from user
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ #define waterpump 7
+#define buzzer 8
+char recievedchar;
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(waterpump, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+}
+
+void loop() {
+
+  // put your main code here, to run repeatedly:
+  if (Serial.available() > 0 ){
+    recievedchar = Serial.read();
+    if (recievedchar == '1'){
+      digitalWrite(waterpump, 1); 
+      digitalWrite(buzzer, 1); 
+      
+  }
+  else{
+      digitalWrite(waterpump, 0);
+      digitalWrite(buzzer, 0); 
+      
+    }
+    
+
+
+  }
+  delay(500);
+}
